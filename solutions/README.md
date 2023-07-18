@@ -1,5 +1,7 @@
 ## Solution submission
 
+- Create a branch to submit your solution. Refer [branch creation](./../branch_creation_guidelines.md)
+
 - Create a new directory with your name/ user name under the solutions directory.
 
 - You can create a further subdirectory 
