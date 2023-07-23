@@ -34,17 +34,30 @@ int main(int argc, char **argv)
     printf("Base address pointer = %d\n", ptr);
     printf("Base address to integer: %d\n", ptrVal);
 
-    printf("\nArray elements using index formula (pointer): \n");
-    for (int i = 0; i < 5; i++)
+    printf("\nArray elements using pointer (1D array index): \n");
+    for (int i = 0; i < 9; i++)
     {
-        printf("BAP + I = \t%d + %d = \t%d", ptr, i, ptr + i);
-        printf("\t --> %d\n", *(ptr + i));
+        printf("%d -> %d\n", ptr + i, ptr[i]);
     }
-    printf("\nArray elements using index formula (integer as pointer): \n");
-    for (int i = 0; i < 5; i++)
+
+    printf("\nArray elements using index formula (pointer): \n");
+    for (int i = 0; i < 3; i++)
     {
-        printf("BA + (DT * I) = \t%d + ( %d * %d ) = \t%d", ptrVal, sizeof(int), i, ptrVal + (sizeof(int) * i));
-        printf("\t --> %d\n", *(int *)(ptrVal + (sizeof(int) * i)));
+        for (int j = 0; j < 3; j++)
+        {
+            printf("BAP + (I * N + J) = \t%d + ( %d * %d + %d ) = \t%d", ptr, i, 3, j, ptr + (i * 3 + j));
+            printf("\t --> %d\n", *(int *)(ptr + (i * 3 + j)));
+        }
+    }
+
+    printf("\nArray elements using index formula (integer as pointer): \n");
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            printf("BA + (DT * (I * N + J)) = \t%d + ( %d * ( %d * %d + %d )) = \t%d", ptrVal, sizeof(int), i, 3, j, ptrVal + (sizeof(int) * (i * 3 + j)));
+            printf("\t --> %d\n", *(int *)(ptrVal + (sizeof(int) * (i * 3 + j))));
+        }
     }
     return 0;
 }
