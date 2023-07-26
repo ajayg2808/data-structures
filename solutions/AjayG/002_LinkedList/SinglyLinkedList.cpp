@@ -44,8 +44,16 @@ public:
     SinglyLinkedList();
     bool add(T data);
     bool add(int index, T data);
-    // T delete(T data);
-    // T delete(int index);
+    int size();
+    bool isEmpty()
+    {
+        if (this->HEAD == nullptr)
+            return true;
+        return false;
+    }
+    T remove(T data);
+    T removeAt(int index);
+    void revert();
     void display();
     ~SinglyLinkedList();
 };
@@ -71,21 +79,19 @@ template <typename T>
 bool SinglyLinkedList<T>::add(T data)
 {
     Node<T> *t = new Node<T>(data);
-    Node<T> *p = this->HEAD;
-    Node<T> *q = nullptr;
-    while (p != nullptr)
-    {
-        q = p;
-        p = p->getNext();
-    }
-    if (q == nullptr)
+    if (this->isEmpty())
     {
         this->HEAD = t;
         return true;
     }
     else
     {
-        q->setNext(t);
+        Node<T> *p = this->HEAD;
+        while (p->getNext() != nullptr)
+        {
+            p = p->getNext();
+        }
+        p->setNext(t);
         return true;
     }
     return false;
@@ -94,53 +100,224 @@ bool SinglyLinkedList<T>::add(T data)
 template <typename T>
 bool SinglyLinkedList<T>::add(int index, T data)
 {
-    Node<T> *q, *p = this->HEAD;
-    int i = 0;
-    if (p == nullptr && index == 0)
+    Node<T> *t = new Node<T>(data);
+    Node<T> *p = this->HEAD;
+    if (index == 0)
     {
-        this->HEAD = new Node<T>(data);
+        t->setNext(p);
+        this->HEAD = t;
+        return true;
     }
     else
     {
-        while (p->getNext() != nullptr && i < index)
+        while (p->getNext() != nullptr && --index > 0)
         {
-            i++;
+            p = p->getNext();
+        }
+        if (index > 1)
+            return false;
+
+        t->setNext(p->getNext());
+        p->setNext(t);
+        return true;
+    }
+    return false;
+}
+
+template <typename T>
+int SinglyLinkedList<T>::size()
+{
+    int count = 0;
+    Node<T> *p = this->HEAD;
+    while (p != nullptr)
+    {
+
+        count++;
+        p = p->getNext();
+    }
+    return count;
+}
+
+template <typename T>
+T SinglyLinkedList<T>::remove(T data)
+{
+    if (!this->isEmpty())
+    {
+        Node<T> *q, *p = this->HEAD;
+        do
+        {
+            if (p->getData() == data)
+            {
+
+                if (p == this->HEAD)
+                {
+                    this->HEAD = p->getNext();
+                }
+                else
+                {
+                    q->setNext(p->getNext());
+                }
+                T value = p->getData();
+                delete (p);
+                return value;
+            }
+            q = p;
+            p = p->getNext();
+        } while (p != nullptr);
+    }
+    return (T) nullptr;
+}
+
+template <typename T>
+T SinglyLinkedList<T>::removeAt(int index)
+{
+    if (!this->isEmpty())
+    {
+        Node<T> *q, *p;
+        q = p = this->HEAD;
+        if (index == 0)
+        {
+            T data = p->getData();
+            this->HEAD = p->getNext();
+            delete p;
+            return data;
+        }
+        while (p != nullptr && --index >= 0)
+        {
             q = p;
             p = p->getNext();
         }
-        if (p != nullptr && i == index)
-        {
-            q->setNext(new Node<T>(data));
-            q->getNext()->setNext(p);
-        }
+        if (p == nullptr)
+            return (T) nullptr;
+
+        T data = p->getData();
+        q->setNext(p->getNext());
+        delete p;
+        return data;
     }
+    else
+        return (T) nullptr;
+}
+
+template <typename T>
+void SinglyLinkedList<T>::revert()
+{
+    if (!this->isEmpty())
+    {
+        Node<T> *q = nullptr, *r = nullptr, *p = this->HEAD;
+        while (p != nullptr)
+        {
+            r = p->getNext();
+            p->setNext(q);
+            q = p;
+            p = r;
+        }
+        this->HEAD = q;
+    }
+}
+
+template <typename T>
+void SinglyLinkedList<T>::revertRecursion()
+{
+    if (!this->isEmpty())
+    {
+        Node<T> *p = this->Head;
+        }
 }
 
 template <typename T>
 void SinglyLinkedList<T>::display()
 {
     Node<T> *p = this->HEAD;
+    cout << "[ ";
     while (p != nullptr)
     {
         T t = p->getData();
         cout << t << " ";
         p = p->getNext();
     }
+    cout << "]" << endl;
 }
 
 int main(int argc, char *argv[])
 {
+    int ch = -1;
     SinglyLinkedList<int> list;
-    cout << "Signly Linked List created" << endl;
-    list.add(1);
-    list.add(2);
-    list.add(3);
-    list.add(5);
-    list.add(6);
-    cout << "Elements in linked list: ";
-    list.display();
-    list.add(3, 4);
-    cout << "\n\nElements in linked list: ";
-    list.display();
+    do
+    {
+
+        cout << "\n\n1. Add element" << endl;
+        cout << "2. Add element at index" << endl;
+        cout << "3. Display element" << endl;
+        cout << "4. Remove element" << endl;
+        cout << "5. Remove element at index" << endl;
+        cout << "6. Revert list" << endl;
+        cout << "7. Exit" << endl;
+        cout << "Select option: ";
+        cin >> ch;
+
+        int element;
+        int index;
+        bool result;
+        switch (ch)
+        {
+            {
+            case 1:
+                cout << "Enter element to add: ";
+                cin >> element;
+                result = list.add(element);
+                if (result)
+                    cout << "Element added successfully." << endl;
+                else
+                    cout << "Failed to add element." << endl;
+                break;
+            case 2:
+                cout << "Enter element to add: ";
+                cin >> element;
+                cout << "Enter index: ";
+                cin >> index;
+                result = list.add(index, element);
+                if (result)
+                    cout << "Element added successfully." << endl;
+                else
+                    cout << "Failed to add element." << endl;
+                break;
+
+            case 3:
+                cout << "List elements: ";
+                list.display();
+                break;
+
+            case 4:
+                cout << "Enter element to remove: ";
+                cin >> element;
+                element = list.remove(element);
+                cout << "Removed element: " << element << endl;
+                break;
+            case 5:
+                cout << "Enter index to remove element: ";
+                cin >> index;
+                element = list.removeAt(index);
+                cout << "Removed element: " << element << endl;
+                break;
+
+            case 6:
+                list.revert();
+                cout << "List reverted." << endl;
+                list.display();
+                break;
+
+            case 7:
+                cout << "Thank you!" << endl;
+                break;
+            default:
+                cout << "Invalid choice." << endl;
+                cout << "Please enter valid choice." << endl;
+                break;
+            }
+        }
+
+    } while (ch != 7);
+
     return 0;
 }
