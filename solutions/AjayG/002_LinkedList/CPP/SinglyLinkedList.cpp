@@ -40,6 +40,8 @@ class SinglyLinkedList
 private:
     Node<T> *HEAD;
 
+    Node<T> *revert(Node<T> *p);
+
 public:
     SinglyLinkedList();
     bool add(T data);
@@ -54,6 +56,7 @@ public:
     T remove(T data);
     T removeAt(int index);
     void revert();
+    void revertRecursive();
     void display();
     ~SinglyLinkedList();
 };
@@ -217,14 +220,25 @@ void SinglyLinkedList<T>::revert()
 }
 
 template <typename T>
-void SinglyLinkedList<T>::revertRecursion()
+void SinglyLinkedList<T>::revertRecursive()
 {
     if (!this->isEmpty())
     {
-        Node<T> *p = this->Head;
-        }
+        this->HEAD = this->revert(this->HEAD);
+    }
 }
 
+template <typename T>
+Node<T> *SinglyLinkedList<T>::revert(Node<T> *p)
+{
+    if (p == nullptr || p->getNext() == nullptr)
+        return p;
+
+    Node<T> *q = this->revert(p->getNext());
+    p->getNext()->setNext(p);
+    p->setNext(nullptr);
+    return q;
+}
 template <typename T>
 void SinglyLinkedList<T>::display()
 {
@@ -252,7 +266,8 @@ int main(int argc, char *argv[])
         cout << "4. Remove element" << endl;
         cout << "5. Remove element at index" << endl;
         cout << "6. Revert list" << endl;
-        cout << "7. Exit" << endl;
+        cout << "7. Revert list (Recursive)" << endl;
+        cout << "8. Exit" << endl;
         cout << "Select option: ";
         cin >> ch;
 
@@ -308,6 +323,12 @@ int main(int argc, char *argv[])
                 break;
 
             case 7:
+                list.revertRecursive();
+                cout << "List reverted." << endl;
+                list.display();
+                break;
+
+            case 8:
                 cout << "Thank you!" << endl;
                 break;
             default:
@@ -317,7 +338,7 @@ int main(int argc, char *argv[])
             }
         }
 
-    } while (ch != 7);
+    } while (ch != 8);
 
     return 0;
 }
