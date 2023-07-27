@@ -15,3 +15,14 @@
 3. Write a program to find connected loop in singly linked list.
 
    ![Loop image](https://media.geeksforgeeks.org/wp-content/uploads/20221020134638/UntitledDiagramdrawio-300x186.png)
+
+
+### Doubly Linked List
+
+1. Write a program to demonstrate.
+   - Create Doubly Linked List.
+   - Add a new element to the list at the beginning, in between, and at the end.
+   - Delete an element from a list - delete first, delete last, and delete intermediate.
+   - Display list element.
+   - Search element in a list.
+   - Revert list. --> Using recursion
