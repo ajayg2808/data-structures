@@ -8,7 +8,7 @@
    - Delete an element from a list - delete first, delete last, and delete intermediate.
    - Display list element.
    - Search element in a list.
-   - Revert list.
+   - Revert list. --> Using recursion
 
 2. Write a program to create a singly linked list that accepts only unique elements.
    
