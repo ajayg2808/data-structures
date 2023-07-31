@@ -16,6 +16,10 @@
 
    ![Loop image](https://media.geeksforgeeks.org/wp-content/uploads/20221020134638/UntitledDiagramdrawio-300x186.png)
 
+   HINT: use flag to mark element is visited.
+
+   BONUS: Remove connected loop in singliy linked list.
+
 
 ### Doubly Linked List
 
@@ -26,6 +30,9 @@
    - Display list element.
    - Search element in a list.
    - Revert list.
+  
+2. Check connected loop if any - front or rear pointer.
+   - If connected remove it.
   
 ### Circular Linked List
 1. Write a program to create **circular singly linked list** with the below operations.
