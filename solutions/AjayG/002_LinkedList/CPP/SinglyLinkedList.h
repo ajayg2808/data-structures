@@ -1,16 +1,22 @@
+#ifndef SINGLY_LINKED_LIST_H
+#define SINGLY_LINKED_LIST_H
+
 #include <iostream>
 using namespace std;
+
 template <typename T>
 class Node
 {
     T data;
     Node *next;
+    bool isVisited;
 
 public:
     Node(T data)
     {
         this->data = data;
         this->next = nullptr;
+        this->isVisited = false;
     }
 
     T getData()
@@ -23,6 +29,11 @@ public:
         return this->next;
     }
 
+    bool isVisited()
+    {
+        return this->isVisited;
+    }
+
     void setData(T data)
     {
         this->data = data;
@@ -32,21 +43,25 @@ public:
     {
         this->next = node;
     }
+
+    void setIsVisited(bool isVisited)
+    {
+        this->isVisited = isVisited;
+    }
 };
 
 template <typename T>
 class SinglyLinkedList
 {
-private:
+protected:
     Node<T> *HEAD;
-
     Node<T> *revert(Node<T> *p);
 
 public:
     SinglyLinkedList();
     bool add(T data);
     bool add(int index, T data);
-    int size();
+    void display();
     bool isEmpty()
     {
         if (this->HEAD == nullptr)
@@ -57,9 +72,11 @@ public:
     T removeAt(int index);
     void revert();
     void revertRecursive();
-    void display();
+    int size();
+    int search(T data);
     ~SinglyLinkedList();
 };
+
 template <typename T>
 SinglyLinkedList<T>::SinglyLinkedList()
 {
@@ -239,6 +256,7 @@ Node<T> *SinglyLinkedList<T>::revert(Node<T> *p)
     p->setNext(nullptr);
     return q;
 }
+
 template <typename T>
 void SinglyLinkedList<T>::display()
 {
@@ -253,92 +271,24 @@ void SinglyLinkedList<T>::display()
     cout << "]" << endl;
 }
 
-int main(int argc, char *argv[])
+template <typename T>
+int SinglyLinkedList<T>::search(T data)
 {
-    int ch = -1;
-    SinglyLinkedList<int> list;
-    do
+    int index = -1;
+    if (!this->isEmpty())
     {
-
-        cout << "\n\n1. Add element" << endl;
-        cout << "2. Add element at index" << endl;
-        cout << "3. Display element" << endl;
-        cout << "4. Remove element" << endl;
-        cout << "5. Remove element at index" << endl;
-        cout << "6. Revert list" << endl;
-        cout << "7. Revert list (Recursive)" << endl;
-        cout << "8. Exit" << endl;
-        cout << "Select option: ";
-        cin >> ch;
-
-        int element;
-        int index;
-        bool result;
-        switch (ch)
+        index = 0;
+        Node<T> *p = this->HEAD;
+        while (p != nullptr && p->getData() != data)
         {
-            {
-            case 1:
-                cout << "Enter element to add: ";
-                cin >> element;
-                result = list.add(element);
-                if (result)
-                    cout << "Element added successfully." << endl;
-                else
-                    cout << "Failed to add element." << endl;
-                break;
-            case 2:
-                cout << "Enter element to add: ";
-                cin >> element;
-                cout << "Enter index: ";
-                cin >> index;
-                result = list.add(index, element);
-                if (result)
-                    cout << "Element added successfully." << endl;
-                else
-                    cout << "Failed to add element." << endl;
-                break;
-
-            case 3:
-                cout << "List elements: ";
-                list.display();
-                break;
-
-            case 4:
-                cout << "Enter element to remove: ";
-                cin >> element;
-                element = list.remove(element);
-                cout << "Removed element: " << element << endl;
-                break;
-            case 5:
-                cout << "Enter index to remove element: ";
-                cin >> index;
-                element = list.removeAt(index);
-                cout << "Removed element: " << element << endl;
-                break;
-
-            case 6:
-                list.revert();
-                cout << "List reverted." << endl;
-                list.display();
-                break;
-
-            case 7:
-                list.revertRecursive();
-                cout << "List reverted." << endl;
-                list.display();
-                break;
-
-            case 8:
-                cout << "Thank you!" << endl;
-                break;
-            default:
-                cout << "Invalid choice." << endl;
-                cout << "Please enter valid choice." << endl;
-                break;
-            }
+            index++;
+            p = p->getNext();
         }
-
-    } while (ch != 8);
-
-    return 0;
+        if (p == nullptr)
+            return -1;
+        return index;
+    }
+    return index;
 }
+
+#endif
