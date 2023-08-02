@@ -29,7 +29,7 @@ public:
         return this->next;
     }
 
-    bool isVisited()
+    bool getIsVisited()
     {
         return this->isVisited;
     }
@@ -185,7 +185,7 @@ T SinglyLinkedList<T>::remove(T data)
             p = p->getNext();
         } while (p != nullptr);
     }
-    return (T) nullptr;
+    return NULL;
 }
 
 template <typename T>
@@ -208,7 +208,7 @@ T SinglyLinkedList<T>::removeAt(int index)
             p = p->getNext();
         }
         if (p == nullptr)
-            return (T) nullptr;
+            return NULL;
 
         T data = p->getData();
         q->setNext(p->getNext());
@@ -216,7 +216,7 @@ T SinglyLinkedList<T>::removeAt(int index)
         return data;
     }
     else
-        return (T) nullptr;
+        return NULL;
 }
 
 template <typename T>

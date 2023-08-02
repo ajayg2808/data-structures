@@ -21,12 +21,13 @@ void LoopList<T>::markNotVisited()
 {
     if (!this->isEmpty())
     {
-        Node *node = this->HEAD;
-        while (node != nullptr)
+        Node<T> *node = this->HEAD;
+        do
         {
             node->setIsVisited(false);
             node = node->getNext();
-        }
+            cout << "\n Not visited: " << data << endl
+        } while (node != nullptr);
     }
 }
 
@@ -42,8 +43,8 @@ void LoopList<T>::createLoop(T dest)
         }
 
         bool isDestPresent = false;
-        Node *p = *q = this->HEAD;
-
+        Node<T> *p, *q = this->HEAD;
+        p = q;
         do
         {
             if (p->getData() == dest)
@@ -58,7 +59,7 @@ void LoopList<T>::createLoop(T dest)
         }
         else
         {
-            if (p->getData() == data)
+            if (p->getData() == dest)
                 q = p;
         }
         p->setNext(q);
@@ -71,7 +72,10 @@ bool LoopList<T>::isConnectedLoop()
     if (this->isEmpty())
         return false;
 
-    Node *q, *p = this->HEAD;
+    cout << "\n Setting not visited\n";
+    this->markNotVisited();
+    cout << "\n Marked not visited\n";
+    Node<T> *q, *p = this->HEAD;
     q = p->getNext();
 
     while (p != nullptr && q != nullptr)
@@ -94,12 +98,14 @@ template <typename T>
 T LoopList<T>::loopAt()
 {
     if (this->isEmpty())
-        return (T) nullptr;
+        return NULL;
 
-    Node *p = this->HEAD;
+    this->markNotVisited();
+
+    Node<T> *p = this->HEAD;
     while (p != nullptr)
     {
-        if (p->isVisited())
+        if (p->getIsVisited())
         {
             return p->getData();
         }
@@ -107,7 +113,7 @@ T LoopList<T>::loopAt()
         p->setIsVisited(true);
         p = p->getNext();
     }
-    return (T) nullptr;
+    return NULL;
 }
 
 template <typename T>
@@ -116,19 +122,19 @@ bool LoopList<T>::removeLoop()
     if (this->isEmpty())
         return false;
 
-    Node *p = this->HEAD;
+    this->markNotVisited();
+
+    Node<T> *q, *p = this->HEAD;
     q = p->getNext();
     while (q != nullptr)
     {
-        if (q->isVisited())
+        if (q->getIsVisited())
         {
             p->setNext(nullptr);
             return true;
         }
 
-        q->setIsVisited(
-            
-        );
+        q->setIsVisited(true);
         p = q;
         q = p->getNext();
     }
