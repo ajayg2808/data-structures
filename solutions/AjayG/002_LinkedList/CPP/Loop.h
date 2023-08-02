@@ -105,6 +105,7 @@ T LoopList<T>::loopAt()
         }
 
         p->setIsVisited(true);
+        p = p->getNext();
     }
     return (T) nullptr;
 }
@@ -125,7 +126,9 @@ bool LoopList<T>::removeLoop()
             return true;
         }
 
-        q->setIsVisited(true);
+        q->setIsVisited(
+            
+        );
         p = q;
         q = p->getNext();
     }
