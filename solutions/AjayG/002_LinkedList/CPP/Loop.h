@@ -26,8 +26,7 @@ void LoopList<T>::markNotVisited()
         {
             node->setIsVisited(false);
             node = node->getNext();
-            cout << "\n Not visited: " << data << endl
-        } while (node != nullptr);
+        } while (node != nullptr && node->getIsVisited());
     }
 }
 
@@ -72,9 +71,7 @@ bool LoopList<T>::isConnectedLoop()
     if (this->isEmpty())
         return false;
 
-    cout << "\n Setting not visited\n";
     this->markNotVisited();
-    cout << "\n Marked not visited\n";
     Node<T> *q, *p = this->HEAD;
     q = p->getNext();
 

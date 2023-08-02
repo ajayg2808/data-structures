@@ -24,13 +24,7 @@ bool Set<T>::add(T data)
     {
         if (this->search(data) != -1)
             return false;
-        Node<T> *p = this->HEAD;
-        while (p->getNext() != nullptr)
-        {
-            p = p->getNext();
-        }
-        p->setNext(t);
-        return true;
+        return SinglyLinkedList<T>::add(data);
     }
     return false;
 }
@@ -40,8 +34,7 @@ bool Set<T>::add(int index, T data)
 {
     if (this->search(data) != -1)
         return false;
-    // return super.add(index, data);
-    return true;
+    return SinglyLinkedList<T>::add(index, data);
 }
 
 #endif

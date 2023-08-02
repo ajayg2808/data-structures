@@ -87,7 +87,7 @@ int workWithSet()
                 set->display();
                 break;
             case 9:
-                cout << "Thank you!" << endl;
+                cout << "Exiting from Set." << endl;
                 break;
             default:
                 cout << "Invalid choice." << endl;
@@ -171,7 +171,7 @@ int workWithSinglyLinkedList()
                 list->display();
                 break;
             case 9:
-                cout << "Thank you!" << endl;
+                cout << "Exiting from SLL." << endl;
                 break;
             default:
                 cout << "Invalid choice." << endl;
@@ -283,7 +283,7 @@ int workWithLoopList()
                     cout << "Connected loop is not removed or not present." << endl;
                 break;
             case 13:
-                cout << "Thank you!" << endl;
+                cout << "Exiting from Loop list." << endl;
                 break;
             default:
                 cout << "Invalid choice." << endl;
@@ -301,25 +301,32 @@ int workWithLoopList()
 int main(int argc, char *argv[])
 {
     int ch = -1;
-    cout << "\n\n1. Singly Linked List" << endl;
-    cout << "2. Set" << endl;
-    cout << "3. Loop List" << endl;
-    cin >> ch;
-    switch (ch)
+    int retVal = 0;
+    do
     {
-
-    case 1:
-        return workWithSinglyLinkedList();
-
-    case 2:
-        return workWithSet();
-
-    case 3:
-        return workWithLoopList();
-
-    default:
-        cout << "\n Wrong choice"
-             << endl;
-        break;
-    }
+        cout << "\n\n1. Singly Linked List" << endl;
+        cout << "2. Set" << endl;
+        cout << "3. Loop List" << endl;
+        cout << "Enter choice: ";
+        cin >> ch;
+        switch (ch)
+        {
+        case 1:
+            retVal = workWithSinglyLinkedList();
+            break;
+        case 2:
+            retVal = workWithSet();
+            break;
+        case 3:
+            retVal = workWithLoopList();
+            break;
+        case 4:
+            cout << "\nThank You!" << endl;
+            return 0;
+        default:
+            cout << "\n Wrong choice" << endl;
+            break;
+        }
+    } while (true);
+    return retVal;
 }
