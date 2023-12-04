@@ -1,5 +1,6 @@
 
 public interface LinkedList<T> {
+
     public boolean add(T value);
 
     public boolean add(int index, T value);
@@ -10,9 +11,13 @@ public interface LinkedList<T> {
 
     public int size();
 
+    public int search(T value);
+
     public boolean isEmpty();
 
     public void revert();
+
+    public void revertRecursive();
 
     public void display();
 }
